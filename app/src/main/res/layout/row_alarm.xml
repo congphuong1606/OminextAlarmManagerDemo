@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#fcfafa">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#eaeaea"
-        android:padding="1dp">
+        android:layout_marginTop="2dp"
+        android:background="#d0f9f3">
 
         <TextView
             android:id="@+id/tv_timer"
@@ -16,14 +17,17 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:text="6:03"
+            android:textColor="#020101"
             android:textSize="34dp" />
 
-        <Button
+        <ImageButton
 
-            android:id="@+id/btn_off"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/imb_off"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/delete"
             android:text="tắt" />
 
 

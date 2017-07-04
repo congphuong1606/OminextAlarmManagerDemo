@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import ominext.android.vn.ominextalarmmanagerdemo.R;
 
@@ -13,8 +12,9 @@ import ominext.android.vn.ominextalarmmanagerdemo.R;
  * Created by MyPC on 03/07/2017.
  */
 
-public class Music extends Service {
+public class MusicReceiver extends Service {
     MediaPlayer mediaPlayer;
+    int id;
 
     @Nullable
     @Override
@@ -24,11 +24,21 @@ public class Music extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        mediaPlayer = MediaPlayer.create(this, R.raw.pop);
-        mediaPlayer.start();
-        mediaPlayer.start();
-        mediaPlayer.start();
-        Log.e("aaaaa", "tôi trong music");
+
+        String key = intent.getExtras().getString("extra");
+
+        if (key.equals("on")) {
+            id = 1;
+        } else if (key.equals("off")) {
+            id = 0;
+        }
+        if (id == 1) {
+            mediaPlayer = MediaPlayer.create(this, R.raw.ghen);
+            mediaPlayer.start();
+        } else {
+            mediaPlayer.stop();
+            mediaPlayer.reset();
+        }
         return START_NOT_STICKY;
     }
 }

@@ -16,10 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.AddActivity"></activity>
-        <receiver android:name=".Receiver.AlarmReceiver"/>
-        <service android:name=".Receiver.Music"
-            android:enabled="true"/>
+        <activity
+            android:name=".Activity.ShowAlarmDialogActivity"
+            android:theme="@android:style/Theme.Holo.Light.Dialog"></activity>
+        <activity android:name=".Activity.AddActivity" />
+
+        <receiver android:name=".Receiver.AlarmReceiver" />
+
+        <service
+            android:name=".Receiver.MusicReceiver"
+            android:enabled="true" />
+
+
     </application>
 
 </manifest>

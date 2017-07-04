@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import ominext.android.vn.ominextalarmmanagerdemo.R;
 
 public class MainActivity extends AppCompatActivity {
     static final String DATABASE_NAME = "Alarm.sqlite";
-    Button button;
+    ImageButton imbAddAlarm;
     TextView textView;
     private SQLiteDatabase database;
     Alarm alarm;
@@ -44,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button = (Button) findViewById(R.id.btn_add);
-        button.setOnClickListener(new View.OnClickListener() {
+        imbAddAlarm = (ImageButton) findViewById(R.id.imb_add_alarm);
+        imbAddAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddActivity.class);
@@ -56,11 +57,14 @@ public class MainActivity extends AppCompatActivity {
         layoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+
         adapter = new AlarmAdapter(this, R.layout.row_alarm, alarms);
         recyclerView.setAdapter(adapter);
 
 
         readData();
+
+
 //        calendar = Calendar.getInstance();
 //        SimpleDateFormat adt = null;
 //        adt = new SimpleDateFormat("hh:mm a", Locale.getDefault());
@@ -113,7 +117,8 @@ public class MainActivity extends AppCompatActivity {
             cursor.moveToPosition(i);
             int id = cursor.getInt(0);
             String time = cursor.getString(1);
-            alarms.add(new Alarm(id, time));
+            int iUniqueId = cursor.getInt(2);
+            alarms.add(new Alarm(false, id, time, iUniqueId));
         }
         adapter.notifyDataSetChanged();
     }

@@ -16,12 +16,14 @@
 
     </android.support.v7.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/btn_add"
+    <ImageButton
+        android:layout_marginBottom="20dp"
+        android:id="@+id/imb_add_alarm"
+        android:background="@drawable/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:text="thêm đặt giờ" />
+        />
 
 </RelativeLayout>

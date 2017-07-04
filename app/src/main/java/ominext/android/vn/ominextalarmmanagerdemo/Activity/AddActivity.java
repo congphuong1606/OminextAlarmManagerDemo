@@ -27,6 +27,7 @@ public class AddActivity extends AppCompatActivity {
     Calendar calendar;
     AlarmManager alarmManager;
     PendingIntent pendingIntent;
+    private int iUniqueId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,28 +45,31 @@ public class AddActivity extends AppCompatActivity {
         tvTimeCurrent.setText(strTime);
         adt = new SimpleDateFormat("HH:mm", Locale.getDefault());
         tvTimeCurrent.setTag(adt.format(calendar.getTime()));
-
         tvOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                iUniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
                 calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
                 calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-                int gio = timePicker.getCurrentHour();
-                int phut = timePicker.getCurrentMinute();
-                String string_gio = String.valueOf(gio);
-                String string_phut = String.valueOf(phut);
-                if (gio > 12) {
-                    string_gio = String.valueOf(gio - 12);
+                calendar.set(Calendar.SECOND, 0);
+
+
+                String hour = String.valueOf(timePicker.getCurrentHour());
+                String minute = String.valueOf(timePicker.getCurrentMinute());
+                if (timePicker.getCurrentHour() > 12) {
+                    hour = String.valueOf(timePicker.getCurrentHour() - 12);
                 }
-                if (phut < 10) {
-                    string_phut = "0" + String.valueOf(phut);
+                if (timePicker.getCurrentMinute() < 10) {
+                    minute = "0" + String.valueOf(timePicker.getCurrentMinute());
                 }
+                intent.putExtra("extra", "on");
                 pendingIntent = PendingIntent.getBroadcast(
-                        AddActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                        AddActivity.this, iUniqueId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                tvTimeCurrent.setText(string_gio + ":" + string_phut);
+                tvTimeCurrent.setText(hour + ":" + minute);
                 insertAlarm();
                 Intent i = new Intent(AddActivity.this, MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
             }
         });
@@ -75,6 +79,7 @@ public class AddActivity extends AppCompatActivity {
         String s = tvTimeCurrent.getText().toString();
         ContentValues values = new ContentValues();
         values.put("time", s);
+        values.put("iUniqueId", iUniqueId);
         database = Database.initDatabase(AddActivity.this, DATABASE_NAME);
         database.insert("Alarm", null, values);
 
