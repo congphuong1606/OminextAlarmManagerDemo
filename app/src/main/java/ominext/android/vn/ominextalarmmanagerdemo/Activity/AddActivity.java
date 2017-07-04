@@ -23,7 +23,7 @@ import ominext.android.vn.ominextalarmmanagerdemo.Receiver.AlarmReceiver;
 public class AddActivity extends AppCompatActivity {
     final String DATABASE_NAME = "Alarm.sqlite";
     SQLiteDatabase database;
-    TextView  tvTimeCurrent,tvRepeatFiveMin,tvRepeatDay,tvRepeatWeek;
+    TextView tvTimeCurrent, tvRepeatFiveMin, tvRepeatDay, tvRepeatWeek;
     ImageButton imbOk;
     TimePicker timePicker;
     Calendar calendar;
@@ -31,6 +31,7 @@ public class AddActivity extends AppCompatActivity {
     PendingIntent pendingIntent;
     private int iUniqueId = 0;
     private long interval;
+    boolean ischeck = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +53,15 @@ public class AddActivity extends AppCompatActivity {
         adt = new SimpleDateFormat("HH:mm", Locale.getDefault());
         tvTimeCurrent.setTag(adt.format(calendar.getTime()));
 
-        calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
-        calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
-        calendar.set(Calendar.SECOND, 0);
+
         tvRepeatFiveMin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 tvRepeatFiveMin.setBackgroundColor(AddActivity.this.getResources().getColor(R.color.red));
                 tvRepeatDay.setBackgroundColor(AddActivity.this.getResources().getColor(R.color.nau));
                 tvRepeatWeek.setBackgroundColor(AddActivity.this.getResources().getColor(R.color.nau));
-               interval=5*60*1000;
+                interval = 5 * 60 * 1000;
+                ischeck = true;
             }
         });
         tvRepeatDay.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +70,8 @@ public class AddActivity extends AppCompatActivity {
                 tvRepeatFiveMin.setBackgroundColor(AddActivity.this.getResources().getColor(R.color.nau));
                 tvRepeatDay.setBackgroundColor(AddActivity.this.getResources().getColor(R.color.red));
                 tvRepeatWeek.setBackgroundColor(AddActivity.this.getResources().getColor(R.color.nau));
-                interval= AlarmManager.INTERVAL_DAY;
+                interval = AlarmManager.INTERVAL_DAY;
+                ischeck = true;
             }
         });
         tvRepeatWeek.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +80,8 @@ public class AddActivity extends AppCompatActivity {
                 tvRepeatFiveMin.setBackgroundColor(AddActivity.this.getResources().getColor(R.color.nau));
                 tvRepeatDay.setBackgroundColor(AddActivity.this.getResources().getColor(R.color.nau));
                 tvRepeatWeek.setBackgroundColor(AddActivity.this.getResources().getColor(R.color.red));
-                interval=7*24*60*60*1000;
+                interval = 7 * 24 * 60 * 60 * 1000;
+                ischeck = true;
             }
         });
 
@@ -89,8 +91,9 @@ public class AddActivity extends AppCompatActivity {
             public void onClick(View view) {
                 iUniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
 
-
-
+                calendar.set(Calendar.HOUR_OF_DAY, timePicker.getCurrentHour());
+                calendar.set(Calendar.MINUTE, timePicker.getCurrentMinute());
+                calendar.set(Calendar.SECOND, 0);
                 String hour = String.valueOf(timePicker.getCurrentHour());
                 String minute = String.valueOf(timePicker.getCurrentMinute());
                 if (timePicker.getCurrentHour() > 12) {
@@ -102,8 +105,13 @@ public class AddActivity extends AppCompatActivity {
                 intent.putExtra("extra", "on");
                 pendingIntent = PendingIntent.getBroadcast(
                         AddActivity.this, iUniqueId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                if (ischeck) {
+                    alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, pendingIntent);
 
-                alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),interval, pendingIntent);
+                } else if (!ischeck) {
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
+                }
                 tvTimeCurrent.setText(hour + ":" + minute);
                 insertAlarm();
                 Intent i = new Intent(AddActivity.this, MainActivity.class);
@@ -112,7 +120,6 @@ public class AddActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     private void insertAlarm() {
