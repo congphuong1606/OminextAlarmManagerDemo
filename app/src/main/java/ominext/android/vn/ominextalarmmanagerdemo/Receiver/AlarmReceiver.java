@@ -13,16 +13,13 @@ import ominext.android.vn.ominextalarmmanagerdemo.Activity.ShowAlarmDialogActivi
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        String key = intent.getExtras().getString("extra");
-        Intent intenMusic = new Intent(context, MusicReceiver.class);
-        intenMusic.putExtra("extra", key);
-        context.startService(intenMusic);
-        if (key.equals("on")) {
-            Intent intentShowdialog = new Intent("android.intent.action.MAIN");
-            intentShowdialog.setClass(context, ShowAlarmDialogActivity.class);
-            intentShowdialog.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intentShowdialog);
-        }
+
+            Intent intentShow = new Intent("android.intent.action.MAIN");
+            intentShow.setClass(context, ShowAlarmDialogActivity.class);
+            intentShow.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intentShow);
+
+
 
     }
 }

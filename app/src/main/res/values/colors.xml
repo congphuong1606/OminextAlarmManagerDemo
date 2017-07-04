@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="transaction">#0fffffff</color>
+    <color name="blac">#000000</color>
+    <color name="red">#ef5fa9</color>
+    <color name="nau">#979090</color>
+
 </resources>

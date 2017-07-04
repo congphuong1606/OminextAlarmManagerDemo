@@ -12,32 +12,86 @@
 
         android:id="@+id/timpicker"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"></TimePicker>
 
-
-    </TimePicker>
-
-    <TextView
-        android:id="@+id/tv_ok"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="80dp"
-        android:layout_marginTop="50dp"
-        android:text="ok"
-        android:textColor="#e71d4c"
-        android:textSize="30sp" />
+        android:layout_above="@+id/imb_ok"
+        android:layout_marginBottom="70dp"
+        android:background="#080202"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textColor="#0b0808"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1"
+            android:background="#f9f9f9"
+            android:gravity="center"
+            android:text="lap lai :"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_repeat5min"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="1dp"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:gravity="center"
+            android:text="5 phut"
+            android:textColor="#19316e"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_repeat_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="1dp"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:gravity="center"
+            android:text="mỗi ngày"
+            android:textColor="#19316e"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_repeat_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_weight="1"
+            android:background="#fff"
+            android:gravity="center"
+            android:text="mỗi tuần"
+            android:textColor="#19316e"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+
 
     <TextView
 
         android:id="@+id/tv_curent_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/tv_ok"
+        android:layout_above="@id/imb_ok"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="110dp"
         android:text="12:12"
         android:textColor="#000000"
-        android:textSize="20sp" />
+        android:textSize="15sp" />
+    <ImageButton
+        android:id="@+id/imb_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="50dp"
+        android:text="ok"
+        android:background="@drawable/ic_ok"
+        android:textColor="#e71d4c"
+        android:textSize="30sp" />
 </RelativeLayout>
