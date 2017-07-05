@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -17,6 +15,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ominext.android.vn.ominextalarmmanagerdemo.Adapter.AlarmAdapter;
 import ominext.android.vn.ominextalarmmanagerdemo.Database.Database;
 import ominext.android.vn.ominextalarmmanagerdemo.Model.Alarm;
@@ -24,15 +25,18 @@ import ominext.android.vn.ominextalarmmanagerdemo.R;
 
 public class MainActivity extends AppCompatActivity {
     static final String DATABASE_NAME = "Alarm.sqlite";
-    ImageButton imbAddAlarm;
     TextView textView;
+    @BindView(R.id.recycleview)
+    RecyclerView recycleview;
+    @BindView(R.id.imb_add_alarm)
+    ImageButton imbAddAlarm;
     private SQLiteDatabase database;
     Alarm alarm;
     ArrayList<Alarm> alarms = new ArrayList<>();
     private AlarmAdapter adapter;
-    private RecyclerView recyclerView;
+
     private RecyclerView.LayoutManager layoutManager;
-    private Button add;
+
     private TimePickerDialog.OnTimeSetListener callbackTime;
     private String hours;
     private Calendar calendar;
@@ -44,24 +48,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        imbAddAlarm = (ImageButton) findViewById(R.id.imb_add_alarm);
-        imbAddAlarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddActivity.class);
-                startActivity(intent);
-            }
-        });
-        recyclerView = (RecyclerView) findViewById(R.id.recycleview);
+        ButterKnife.bind(this);
         layoutManager = new GridLayoutManager(this, 1);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-
+        recycleview.setLayoutManager(layoutManager);
+        recycleview.setHasFixedSize(true);
         adapter = new AlarmAdapter(this, R.layout.row_alarm, alarms);
-        recyclerView.setAdapter(adapter);
-
-
+        recycleview.setAdapter(adapter);
         readData();
 
 
@@ -124,4 +116,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @OnClick(R.id.imb_add_alarm)
+    public void onViewClicked() {
+        Intent intent = new Intent(MainActivity.this, AddActivity.class);
+        startActivity(intent);
+    }
 }

@@ -5,7 +5,7 @@ package ominext.android.vn.ominextalarmmanagerdemo.Model;
  */
 
 public class Alarm {
-    private boolean check=false;
+    private boolean check = false;
     private int id;
     private String time;
     private int iUniqueId;
